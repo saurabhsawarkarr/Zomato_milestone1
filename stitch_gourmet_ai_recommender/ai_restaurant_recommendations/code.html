@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Cinder AI - Culinary Discovery</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-tint": "#ffb3b1",
+                        "primary-container": "#ff535a",
+                        "primary": "#ffb3b1",
+                        "on-tertiary-fixed-variant": "#00504c",
+                        "background": "#10141a",
+                        "on-secondary-fixed-variant": "#783200",
+                        "on-secondary-fixed": "#341100",
+                        "on-primary-fixed-variant": "#92001c",
+                        "tertiary-container": "#32a099",
+                        "on-tertiary-container": "#00302d",
+                        "inverse-primary": "#bb162c",
+                        "on-error-container": "#ffdad6",
+                        "secondary": "#ffb690",
+                        "surface-container-low": "#181c22",
+                        "on-primary": "#680011",
+                        "tertiary": "#71d7cf",
+                        "on-primary-fixed": "#410007",
+                        "on-error": "#690005",
+                        "surface-variant": "#31353c",
+                        "on-primary-container": "#5b000e",
+                        "surface-container-highest": "#31353c",
+                        "on-secondary": "#552100",
+                        "tertiary-fixed-dim": "#71d7cf",
+                        "surface-container-lowest": "#0a0e14",
+                        "inverse-surface": "#dfe2eb",
+                        "tertiary-fixed": "#8ef4eb",
+                        "error": "#ffb4ab",
+                        "on-secondary-container": "#4a1c00",
+                        "primary-fixed": "#ffdad8",
+                        "on-surface": "#dfe2eb",
+                        "inverse-on-surface": "#2d3137",
+                        "secondary-container": "#ec6a06",
+                        "secondary-fixed": "#ffdbca",
+                        "surface-bright": "#353940",
+                        "surface-dim": "#10141a",
+                        "on-surface-variant": "#e4bebc",
+                        "on-tertiary": "#003734",
+                        "surface-container": "#1c2026",
+                        "on-tertiary-fixed": "#00201e",
+                        "on-background": "#dfe2eb",
+                        "primary-fixed-dim": "#ffb3b1",
+                        "secondary-fixed-dim": "#ffb690",
+                        "outline": "#ab8987",
+                        "outline-variant": "#5b403f",
+                        "surface": "#10141a",
+                        "error-container": "#93000a",
+                        "surface-container-high": "#262a31"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "sm": "12px",
+                        "xl": "80px",
+                        "container-margin": "20px",
+                        "base": "8px",
+                        "gutter": "16px",
+                        "xs": "4px",
+                        "lg": "48px",
+                        "md": "24px"
+                    },
+                    "fontFamily": {
+                        "headline-lg": ["Outfit"],
+                        "body-md": ["Inter"],
+                        "headline-lg-mobile": ["Outfit"],
+                        "label-sm": ["Inter"],
+                        "label-md": ["Inter"],
+                        "display-lg": ["Outfit"],
+                        "headline-md": ["Outfit"],
+                        "body-lg": ["Inter"]
+                    },
+                    "fontSize": {
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "headline-lg-mobile": ["28px", { "lineHeight": "36px", "fontWeight": "600" }],
+                        "label-sm": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500" }],
+                        "label-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600" }],
+                        "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body { background-color: #0d1117; color: #dfe2eb; }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+        }
+        .cinder-gradient {
+            background: linear-gradient(135deg, #e23744 0%, #f97316 100%);
+        }
+        .cinder-text-gradient {
+            background: linear-gradient(135deg, #e23744 0%, #f97316 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .pulse-glow:hover {
+            box-shadow: 0 0 20px rgba(226, 55, 68, 0.3);
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% { box-shadow: 0 0 20px rgba(226, 55, 68, 0.3); }
+            50% { box-shadow: 0 0 40px rgba(226, 55, 68, 0.5); }
+            100% { box-shadow: 0 0 20px rgba(226, 55, 68, 0.3); }
+        }
+        
+        input[type=range] {
+            -webkit-appearance: none;
+            width: 100%;
+            background: transparent;
+        }
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            height: 16px;
+            width: 16px;
+            border-radius: 50%;
+            background: #fff;
+            cursor: pointer;
+            margin-top: -6px;
+            box-shadow: 0 0 10px rgba(255,255,255,0.5);
+        }
+        input[type=range]::-webkit-slider-runnable-track {
+            width: 100%;
+            height: 4px;
+            cursor: pointer;
+            background: linear-gradient(90deg, #e23744 var(--range-progress), rgba(255,255,255,0.1) var(--range-progress));
+            border-radius: 2px;
+        }
+        
+        .skeleton-shimmer {
+            background: linear-gradient(90deg, rgba(255,255,255,0.05) 25%, rgba(255,255,255,0.1) 50%, rgba(255,255,255,0.05) 75%);
+            background-size: 200% 100%;
+            animation: shimmer 2s infinite linear;
+        }
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+    </style>
+</head>
+<body class="min-h-screen font-body-md text-body-md antialiased overflow-x-hidden">
+<!-- TopNavBar -->
+<nav class="bg-surface/60 backdrop-blur-xl flex justify-between items-center w-full px-container-margin py-base max-w-full sticky top-0 z-50 border-b border-white/10 shadow-2xl">
+<div class="flex items-center gap-md">
+<span class="text-headline-md font-headline-md font-bold text-primary-container">Cinder AI</span>
+<div class="hidden md:flex gap-gutter ml-lg">
+<a class="text-primary font-bold border-b-2 border-primary pb-1 font-label-md text-label-md transition-colors duration-300" href="#">Discover</a>
+<a class="text-on-surface-variant font-medium hover:text-primary font-label-md text-label-md transition-colors duration-300" href="#">Trending</a>
+<a class="text-on-surface-variant font-medium hover:text-primary font-label-md text-label-md transition-colors duration-300" href="#">Collections</a>
+</div>
+</div>
+<div class="flex items-center gap-gutter">
+<button class="text-on-surface-variant hover:text-primary transition-colors duration-300 font-label-md text-label-md">Sign In</button>
+<div class="w-8 h-8 rounded-full overflow-hidden border border-white/10">
+<img alt="User profile avatar" class="w-full h-full object-cover" data-alt="A detailed portrait of a user avatar in a sleek, minimalist style. The lighting is soft and professional, set against a dark background with subtle neon accents. The mood is sophisticated and modern, fitting an elite AI concierge application." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAt15LCH5Km3t1cEIf8suEgmdWiNfEfR0iOucdEZAVwdtab7hph784_quFbIIYok7TRPr16UBV8-Lda08Mpk2pCiydyV2QC-teVRNfqrvvKXPeL2CRM0gTZB27RzPTvvKPPQW8jLz40Y9mznratAVs-vKeekeHCD9NVtf_6D96DLoQFcr3kM572GRgxjdQjXHDQaUjYBCtgHvFjxZsMjtuPtKZfNc_-wPL3D8yTAkB6JYm02k5CQ4G8N23L21b0yOSFOd5uhfRLZslY"/>
+</div>
+</div>
+</nav>
+<!-- Main Layout -->
+<main class="max-w-7xl mx-auto px-container-margin py-lg grid grid-cols-1 lg:grid-cols-12 gap-xl relative">
+<!-- Background Ambient Glow -->
+<div class="fixed top-1/4 left-0 w-[500px] h-[500px] bg-primary-container/10 rounded-full blur-[120px] -z-10 pointer-events-none"></div>
+<div class="fixed bottom-0 right-1/4 w-[600px] h-[600px] bg-secondary-container/10 rounded-full blur-[150px] -z-10 pointer-events-none"></div>
+<!-- Left Column: Sticky Sidebar Form -->
+<aside class="col-span-1 lg:col-span-4 hidden lg:flex flex-col gap-gutter p-md h-[calc(100vh-100px)] sticky top-xl left-0 bg-surface-container-low/40 backdrop-blur-md border-r border-white/5 shadow-xl rounded-xl z-10">
+<div class="mb-sm">
+<div class="flex items-center gap-sm mb-xs">
+<span class="material-symbols-outlined text-primary text-2xl" data-icon="robot_2" data-weight="fill" style="font-variation-settings: 'FILL' 1;">robot_2</span>
+<h2 class="font-headline-md text-headline-md text-primary">Preferences</h2>
+</div>
+<p class="font-body-md text-on-surface-variant text-sm">Refine your taste</p>
+</div>
+<form class="flex flex-col gap-gutter overflow-y-auto pr-sm custom-scrollbar pb-md" id="preferencesForm">
+<!-- Location -->
+<div class="flex flex-col gap-xs">
+<label class="font-label-sm text-label-sm text-on-surface flex items-center gap-xs">
+<span class="material-symbols-outlined text-sm text-on-surface-variant">location_on</span>
+                        Location
+                    </label>
+<div class="relative">
+<input class="w-full bg-surface-variant/30 border border-white/10 rounded-lg py-2 px-3 text-on-surface placeholder:text-on-surface-variant/50 focus:outline-none focus:border-primary-container focus:ring-1 focus:ring-primary-container transition-all" placeholder="Search neighborhoods..." type="text"/>
+<span class="material-symbols-outlined absolute right-3 top-2.5 text-on-surface-variant text-sm pointer-events-none">search</span>
+</div>
+</div>
+<!-- Budget -->
+<div class="flex flex-col gap-xs">
+<label class="font-label-sm text-label-sm text-on-surface flex items-center gap-xs">
+<span class="material-symbols-outlined text-sm text-on-surface-variant">payments</span>
+                        Budget (for two)
+                    </label>
+<div class="grid grid-cols-3 gap-sm">
+<div class="glass-card p-2 rounded-lg text-center cursor-pointer hover:border-primary/50 transition-colors budget-option" data-value="low">
+<span class="font-label-md text-label-md block text-on-surface">Low</span>
+<span class="font-label-sm text-xs text-on-surface-variant">≤₹500</span>
+</div>
+<div class="glass-card p-2 rounded-lg text-center cursor-pointer border-primary/50 bg-primary/10 shadow-[0_0_15px_rgba(255,179,177,0.15)] transition-all budget-option active" data-value="medium">
+<span class="font-label-md text-label-md block text-primary">Medium</span>
+<span class="font-label-sm text-xs text-primary/80">≤₹1500</span>
+</div>
+<div class="glass-card p-2 rounded-lg text-center cursor-pointer hover:border-primary/50 transition-colors budget-option" data-value="high">
+<span class="font-label-md text-label-md block text-on-surface">High</span>
+<span class="font-label-sm text-xs text-on-surface-variant">₹1500+</span>
+</div>
+</div>
+</div>
+<!-- Cuisines -->
+<div class="flex flex-col gap-xs">
+<label class="font-label-sm text-label-sm text-on-surface flex items-center gap-xs">
+<span class="material-symbols-outlined text-sm text-on-surface-variant">restaurant</span>
+                        Cuisines
+                    </label>
+<div class="flex flex-wrap gap-2">
+<span class="px-3 py-1 rounded-full border border-primary/50 bg-primary/10 text-primary font-label-sm text-label-sm cursor-pointer hover:bg-primary/20 transition-colors">Italian</span>
+<span class="px-3 py-1 rounded-full border border-white/10 bg-surface-variant/30 text-on-surface font-label-sm text-label-sm cursor-pointer hover:border-white/30 transition-colors">Sushi</span>
+<span class="px-3 py-1 rounded-full border border-primary/50 bg-primary/10 text-primary font-label-sm text-label-sm cursor-pointer hover:bg-primary/20 transition-colors">Vegan</span>
+<span class="px-3 py-1 rounded-full border border-white/10 bg-surface-variant/30 text-on-surface font-label-sm text-label-sm cursor-pointer hover:border-white/30 transition-colors">Indian</span>
+<span class="px-3 py-1 rounded-full border border-white/10 bg-surface-variant/30 text-on-surface font-label-sm text-label-sm cursor-pointer hover:border-white/30 transition-colors">+ Add</span>
+</div>
+</div>
+<!-- Rating -->
+<div class="flex flex-col gap-xs">
+<div class="flex justify-between items-center">
+<label class="font-label-sm text-label-sm text-on-surface flex items-center gap-xs">
+<span class="material-symbols-outlined text-sm text-on-surface-variant">star</span>
+                            Minimum Rating
+                        </label>
+<span class="font-label-md text-label-md text-primary" id="ratingValue">4.0+</span>
+</div>
+<input class="mt-2" max="5" min="0" step="0.1" style="--range-progress: 80%;" type="range" value="4.0"/>
+</div>
+<!-- Notes -->
+<div class="flex flex-col gap-xs">
+<label class="font-label-sm text-label-sm text-on-surface flex items-center gap-xs">
+<span class="material-symbols-outlined text-sm text-on-surface-variant">edit_note</span>
+                        Vibe &amp; Notes
+                    </label>
+<textarea class="w-full bg-surface-variant/30 border border-white/10 rounded-lg py-2 px-3 text-on-surface placeholder:text-on-surface-variant/50 focus:outline-none focus:border-primary-container focus:ring-1 focus:ring-primary-container transition-all resize-none font-body-md text-sm" placeholder="E.g., quiet for a date, outdoor seating..." rows="3"></textarea>
+</div>
+<div class="mt-auto pt-md">
+<button class="w-full cinder-gradient text-white font-label-md text-label-md py-3 rounded-full pulse-glow transition-all duration-300 flex justify-center items-center gap-2" id="submitBtn" type="button">
+<span class="material-symbols-outlined text-sm">auto_awesome</span>
+                        Update Results
+                    </button>
+</div>
+</form>
+</aside>
+<!-- Right Column: Results Grid -->
+<section class="col-span-1 lg:col-span-8 flex flex-col gap-lg relative">
+<!-- Header -->
+<div class="flex justify-between items-end border-b border-white/10 pb-sm">
+<div>
+<h1 class="font-display-lg text-display-lg text-on-surface mb-xs">Curated for You</h1>
+<p class="font-body-md text-on-surface-variant">AI-selected matches based on your preferences.</p>
+</div>
+<div class="hidden sm:flex gap-2">
+<button class="p-2 rounded-lg bg-surface-variant/50 text-on-surface hover:bg-surface-variant transition-colors"><span class="material-symbols-outlined">grid_view</span></button>
+<button class="p-2 rounded-lg text-on-surface-variant hover:text-on-surface transition-colors"><span class="material-symbols-outlined">view_list</span></button>
+</div>
+</div>
+<!-- Loading State Overlay (Hidden initially) -->
+<div class="hidden absolute inset-0 z-20 flex flex-col items-center justify-center bg-background/80 backdrop-blur-sm rounded-xl" id="loadingState">
+<div class="w-16 h-16 rounded-full cinder-gradient animate-pulse flex items-center justify-center mb-md">
+<span class="material-symbols-outlined text-white text-3xl">psychology</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-surface mb-2">Groq LLM is thinking...</h3>
+<p class="font-body-md text-on-surface-variant text-center max-w-sm">Analyzing millions of data points to find your perfect culinary match.</p>
+</div>
+<!-- Results Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-gutter" id="resultsGrid">
+<!-- Card 1 -->
+<article class="glass-card rounded-xl overflow-hidden group hover:-translate-y-1 transition-transform duration-300 relative flex flex-col h-full">
+<div class="absolute top-3 right-3 z-10 bg-black/50 backdrop-blur-md border border-white/20 rounded-full px-2 py-1 flex items-center gap-1 shadow-lg">
+<span class="text-[#FFD700] text-sm">#1</span>
+<span class="material-symbols-outlined text-[#FFD700] text-[14px]" data-icon="workspace_premium" data-weight="fill" style="font-variation-settings: 'FILL' 1;">workspace_premium</span>
+</div>
+<div class="h-48 w-full overflow-hidden relative">
+<img alt="Restaurant interior" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="A high-quality, atmospheric photograph of a rustic Italian pasta dish served in a dimly lit, upscale restaurant. The lighting highlights the rich textures of the food against a dark, moody background. A subtle warm glow creates an inviting, luxurious dining experience." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC7_DyRvWzF37eqpglJ7QUONIfE4aonBub7nECt-BiD7EIiRD-QewxfFUXX8nTJjyd8Uiz-yDlW83DmlOEyIRUhS1M-6nwfajAfRrV8v-qfgp8ku1gRx5kpipx3ShW6XS2R2a1FLYnI2iclO0nASjS2tOTBhZhuJfp08fuHNmBV5ZZ9sMSZ7NRE1HrCnS9kRGQpAIv-GZqRlfjtiM2NjIgXAN-uqOc2h8Xv1PDCf6koMbky0oX-bIR18lyIgPJB7W_kVMkQfGBW_8rQ"/>
+<div class="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent"></div>
+</div>
+<div class="p-md flex flex-col flex-grow">
+<div class="flex justify-between items-start mb-2">
+<h3 class="font-headline-md text-headline-md text-on-surface">Osteria Rione</h3>
+<div class="flex items-center gap-1 bg-surface-variant/50 px-2 py-1 rounded-md">
+<span class="material-symbols-outlined text-secondary-container text-[14px]">star</span>
+<span class="font-label-sm text-sm text-on-surface">4.8</span>
+</div>
+</div>
+<div class="flex flex-wrap gap-2 mb-md">
+<span class="px-2 py-0.5 rounded border border-white/10 bg-white/5 font-label-sm text-xs text-on-surface-variant">Italian</span>
+<span class="px-2 py-0.5 rounded border border-white/10 bg-white/5 font-label-sm text-xs text-on-surface-variant">Wine Bar</span>
+<span class="px-2 py-0.5 rounded border border-primary/20 bg-primary/5 font-label-sm text-xs text-primary">₹1200 for two</span>
+</div>
+<div class="mt-auto border-l-2 border-primary-container pl-3 py-1">
+<p class="font-body-md text-sm text-on-surface-variant italic">"Perfect match for your 'quiet date' note. Excellent handmade pasta and a highly-rated intimate ambience."</p>
+</div>
+</div>
+</article>
+<!-- Card 2 -->
+<article class="glass-card rounded-xl overflow-hidden group hover:-translate-y-1 transition-transform duration-300 relative flex flex-col h-full">
+<div class="absolute top-3 right-3 z-10 bg-black/50 backdrop-blur-md border border-white/20 rounded-full px-2 py-1 flex items-center gap-1 shadow-lg">
+<span class="text-[#C0C0C0] text-sm">#2</span>
+</div>
+<div class="h-48 w-full overflow-hidden relative">
+<div class="w-full h-full bg-cover bg-center group-hover:scale-105 transition-transform duration-500" data-alt="An elegant, modern sushi platter beautifully presented on a dark slate stone. Shot with a macro lens, focusing on the fresh, vibrant colors of the fish with soft bokeh in the background. The aesthetic is clean, minimalist, and highly sophisticated." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBO6eqE1hk9dZCH-0Rpj7WjanNXsoiNPtje6TggBL6TmWc4gbi3X-cyJq6UJWz1WFGKFQwbpaqTs5RXVQM4ubT6SdvFG9XoGypluYVKb3QB6yRIdrt6TADEE7yBAi20yQwduY1vr-bsxqfmbbIEhOCOWRnxNG9Z5PwEFk1oSsI_x5wwuKmzvpSVnmjrSfwdmXW9GkZeUVTXPp1Kds3TZmXQnyCczZsaCwYttZTaopJ5FvIBD4Zu9_u3u3XIsKliXT2k-SDwRZQ4YG5s')"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent"></div>
+</div>
+<div class="p-md flex flex-col flex-grow">
+<div class="flex justify-between items-start mb-2">
+<h3 class="font-headline-md text-headline-md text-on-surface">Zenith Sushi</h3>
+<div class="flex items-center gap-1 bg-surface-variant/50 px-2 py-1 rounded-md">
+<span class="material-symbols-outlined text-secondary-container text-[14px]">star</span>
+<span class="font-label-sm text-sm text-on-surface">4.6</span>
+</div>
+</div>
+<div class="flex flex-wrap gap-2 mb-md">
+<span class="px-2 py-0.5 rounded border border-white/10 bg-white/5 font-label-sm text-xs text-on-surface-variant">Sushi</span>
+<span class="px-2 py-0.5 rounded border border-white/10 bg-white/5 font-label-sm text-xs text-on-surface-variant">Japanese</span>
+<span class="px-2 py-0.5 rounded border border-primary/20 bg-primary/5 font-label-sm text-xs text-primary">₹1400 for two</span>
+</div>
+<div class="mt-auto border-l-2 border-primary-container pl-3 py-1">
+<p class="font-body-md text-sm text-on-surface-variant italic">"Fits the budget perfectly. Known for their Omakase and serene dining environment."</p>
+</div>
+</div>
+</article>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-surface-container-lowest border-t border-white/10 w-full mt-xl">
+<div class="max-w-7xl mx-auto px-container-margin py-lg flex flex-col md:flex-row justify-between items-center gap-md">
+<div class="font-headline-md text-headline-md text-on-surface">Cinder AI</div>
+<div class="flex flex-wrap justify-center gap-gutter">
+<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-tertiary-fixed transition-colors" href="#">Privacy Policy</a>
+<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-tertiary-fixed transition-colors" href="#">Terms of Service</a>
+<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-tertiary-fixed transition-colors" href="#">Contact Us</a>
+<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-tertiary-fixed transition-colors" href="#">Global Rankings</a>
+</div>
+<div class="font-body-md text-sm text-on-surface-variant">© 2024 Cinder AI. All culinary rights reserved.</div>
+</div>
+</footer>
+<script>
+        // Simple interactions
+        document.querySelectorAll('.budget-option').forEach(el => {
+            el.addEventListener('click', () => {
+                document.querySelectorAll('.budget-option').forEach(opt => {
+                    opt.classList.remove('border-primary/50', 'bg-primary/10', 'shadow-[0_0_15px_rgba(255,179,177,0.15)]');
+                    opt.classList.add('hover:border-primary/50');
+                    opt.querySelector('.text-label-md').classList.remove('text-primary');
+                    opt.querySelector('.text-label-md').classList.add('text-on-surface');
+                    opt.querySelector('.text-xs').classList.remove('text-primary/80');
+                    opt.querySelector('.text-xs').classList.add('text-on-surface-variant');
+                });
+                
+                el.classList.add('border-primary/50', 'bg-primary/10', 'shadow-[0_0_15px_rgba(255,179,177,0.15)]');
+                el.classList.remove('hover:border-primary/50');
+                el.querySelector('.text-label-md').classList.add('text-primary');
+                el.querySelector('.text-label-md').classList.remove('text-on-surface');
+                el.querySelector('.text-xs').classList.add('text-primary/80');
+                el.querySelector('.text-xs').classList.remove('text-on-surface-variant');
+            });
+        });
+
+        const rangeInput = document.querySelector('input[type="range"]');
+        const ratingValue = document.getElementById('ratingValue');
+        
+        rangeInput.addEventListener('input', (e) => {
+            const val = parseFloat(e.target.value).toFixed(1);
+            ratingValue.textContent = val + '+';
+            const progress = (val / 5) * 100;
+            e.target.style.setProperty('--range-progress', `${progress}%`);
+        });
+
+        document.getElementById('submitBtn').addEventListener('click', () => {
+            const loadingState = document.getElementById('loadingState');
+            const resultsGrid = document.getElementById('resultsGrid');
+            
+            loadingState.classList.remove('hidden');
+            resultsGrid.style.opacity = '0.3';
+            
+            setTimeout(() => {
+                loadingState.classList.add('hidden');
+                resultsGrid.style.opacity = '1';
+                // Simulate new results logic here if needed
+            }, 2000);
+        });
+    </script>
+</body></html>

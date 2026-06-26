@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Cinder AI – AI-Powered Restaurant Recommendations using Groq LLM. Find the best restaurants for your location, budget, and cuisine preferences." />
+  <meta property="og:title"       content="Cinder AI – Culinary Discovery" />
+  <meta property="og:description" content="Personalized restaurant recommendations powered by Groq LLM." />
+  <meta property="og:type"        content="website" />
+  <title>Cinder AI – AI-Powered Culinary Discovery</title>
+
+  <!-- ── Google Fonts ── -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+
+  <!-- ── Tailwind CDN ── -->
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+
+  <!-- ── Tailwind Config (Lumina Dining Design System) ── -->
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "surface-tint":               "#ffb3b1",
+            "primary-container":          "#ff535a",
+            "primary":                    "#ffb3b1",
+            "background":                 "#10141a",
+            "secondary":                  "#ffb690",
+            "surface-container-low":      "#181c22",
+            "on-primary":                 "#680011",
+            "tertiary":                   "#71d7cf",
+            "on-error":                   "#690005",
+            "surface-variant":            "#31353c",
+            "on-primary-container":       "#5b000e",
+            "surface-container-highest":  "#31353c",
+            "on-secondary":               "#552100",
+            "surface-container-lowest":   "#0a0e14",
+            "error":                      "#ffb4ab",
+            "on-secondary-container":     "#4a1c00",
+            "on-surface":                 "#dfe2eb",
+            "inverse-on-surface":         "#2d3137",
+            "secondary-container":        "#ec6a06",
+            "on-surface-variant":         "#e4bebc",
+            "surface-container":          "#1c2026",
+            "on-background":              "#dfe2eb",
+            "surface":                    "#10141a",
+            "error-container":            "#93000a",
+            "on-error-container":         "#ffdad6",
+            "surface-container-high":     "#262a31",
+            "tertiary-container":         "#32a099",
+            "outline":                    "#ab8987",
+            "outline-variant":            "#5b403f",
+          },
+          borderRadius: {
+            DEFAULT: "0.25rem",
+            lg:      "0.5rem",
+            xl:      "0.75rem",
+            full:    "9999px",
+          },
+          spacing: {
+            xs:                 "4px",
+            sm:                 "12px",
+            md:                 "24px",
+            lg:                 "48px",
+            xl:                 "80px",
+            base:               "8px",
+            gutter:             "16px",
+            "container-margin": "20px",
+          },
+          fontFamily: {
+            "display-lg":          ["Outfit", "sans-serif"],
+            "headline-lg":         ["Outfit", "sans-serif"],
+            "headline-lg-mobile":  ["Outfit", "sans-serif"],
+            "headline-md":         ["Outfit", "sans-serif"],
+            "body-lg":             ["Inter",  "sans-serif"],
+            "body-md":             ["Inter",  "sans-serif"],
+            "label-md":            ["Inter",  "sans-serif"],
+            "label-sm":            ["Inter",  "sans-serif"],
+          },
+          fontSize: {
+            "display-lg":         ["48px", { lineHeight: "56px", letterSpacing: "-0.02em", fontWeight: "700" }],
+            "headline-lg":        ["32px", { lineHeight: "40px", letterSpacing: "-0.01em", fontWeight: "600" }],
+            "headline-lg-mobile": ["28px", { lineHeight: "36px", fontWeight: "600" }],
+            "headline-md":        ["24px", { lineHeight: "32px", fontWeight: "600" }],
+            "body-lg":            ["18px", { lineHeight: "28px" }],
+            "body-md":            ["16px", { lineHeight: "24px" }],
+            "label-md":           ["14px", { lineHeight: "20px", letterSpacing: "0.01em", fontWeight: "600" }],
+            "label-sm":           ["12px", { lineHeight: "16px", letterSpacing: "0.05em", fontWeight: "500" }],
+          },
+        },
+      },
+    };
+  </script>
+
+  <!-- ── Custom Styles ── -->
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body class="min-h-screen antialiased overflow-x-hidden">
+
+<!-- ════════════════════════════════════════════════════════════════
+     NAVIGATION
+     ════════════════════════════════════════════════════════════════ -->
+<nav class="backdrop-blur-xl flex justify-between items-center w-full px-container-margin py-base max-w-full sticky top-0 z-50 border-b border-white/10 shadow-2xl" role="navigation" aria-label="Main navigation">
+
+  <!-- Brand -->
+  <div class="flex items-center gap-md">
+    <a href="/" class="flex items-center gap-2 no-underline" aria-label="Cinder AI Home">
+      <!-- Logo SVG (from Stitch ai_dining_logo) -->
+      <svg width="32" height="32" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <defs>
+          <linearGradient id="navLogoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%"   style="stop-color:#e23744;stop-opacity:1"/>
+            <stop offset="100%" style="stop-color:#f97316;stop-opacity:1"/>
+          </linearGradient>
+        </defs>
+        <path d="M50 10 C30 10 20 25 20 45 C20 65 50 90 50 90 C50 90 80 65 80 45 C80 25 70 10 50 10Z"
+              fill="none" stroke="url(#navLogoGrad)" stroke-width="4"/>
+        <path d="M40 30 V45 M50 30 V50 M60 30 V45"
+              stroke="url(#navLogoGrad)" stroke-width="3" stroke-linecap="round"/>
+        <path d="M40 55 Q50 65 60 55"
+              fill="none" stroke="url(#navLogoGrad)" stroke-width="3" stroke-linecap="round"/>
+        <circle cx="50" cy="50" r="3" fill="url(#navLogoGrad)">
+          <animate attributeName="opacity" values="1;0.4;1" dur="2s" repeatCount="indefinite"/>
+        </circle>
+      </svg>
+      <span class="font-headline-md text-headline-md font-bold cinder-text-gradient">Cinder AI</span>
+    </a>
+
+    <!-- Desktop Nav Links -->
+    <div class="hidden md:flex gap-gutter ml-lg" role="list">
+      <a href="#" class="text-primary font-bold border-b-2 border-primary pb-1 font-label-md text-label-md transition-colors duration-300" role="listitem">Discover</a>
+      <a href="#" class="text-on-surface-variant font-medium hover:text-primary font-label-md text-label-md transition-colors duration-300" role="listitem">Trending</a>
+      <a href="/docs" class="text-on-surface-variant font-medium hover:text-primary font-label-md text-label-md transition-colors duration-300" role="listitem" target="_blank" rel="noopener">API Docs</a>
+    </div>
+  </div>
+
+  <!-- Right side -->
+  <div class="flex items-center gap-gutter">
+    <div class="w-8 h-8 rounded-full cinder-gradient flex items-center justify-center text-white text-xs font-bold select-none" aria-label="AI Badge">AI</div>
+  </div>
+</nav>
+
+<!-- ════════════════════════════════════════════════════════════════
+     HERO STRIP
+     ════════════════════════════════════════════════════════════════ -->
+<header class="relative overflow-hidden py-lg px-container-margin border-b border-white/5 hero-section">
+  <div class="ambient-orb-left"  aria-hidden="true"></div>
+  <div class="ambient-orb-right" aria-hidden="true"></div>
+  <div class="max-w-7xl mx-auto relative z-10">
+    <h1 class="font-display-lg text-display-lg text-on-surface mb-2 leading-tight">
+      <span class="cinder-text-gradient">AI-Powered</span> Dining
+    </h1>
+    <p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl">
+      Personalized restaurant recommendations, curated by Groq LLM.
+      Set your preferences and discover your perfect meal.
+    </p>
+  </div>
+</header>
+
+<!-- ════════════════════════════════════════════════════════════════
+     MAIN LAYOUT — 12-Column Grid
+     ════════════════════════════════════════════════════════════════ -->
+<main class="max-w-7xl mx-auto px-container-margin py-lg grid grid-cols-1 lg:grid-cols-12 gap-xl relative">
+
+  <!-- Ambient background glows -->
+  <div class="fixed top-1/4 left-0 w-[500px] h-[500px] bg-primary-container/5 rounded-full blur-[120px] -z-10 pointer-events-none" aria-hidden="true"></div>
+  <div class="fixed bottom-0 right-1/4 w-[600px] h-[600px] bg-secondary-container/5 rounded-full blur-[150px] -z-10 pointer-events-none" aria-hidden="true"></div>
+
+  <!-- ══════════════════════════════════════════════════
+       LEFT COLUMN — Sticky Preference Form
+       ══════════════════════════════════════════════════ -->
+  <aside
+    class="col-span-1 lg:col-span-4 flex flex-col gap-gutter p-md lg:sticky lg:top-[85px] lg:h-[calc(100vh-100px)] bg-surface-container-low/40 backdrop-blur-md border border-white/5 shadow-xl rounded-xl z-10 overflow-y-auto custom-scrollbar"
+    aria-label="Preference Form"
+  >
+    <!-- Sidebar Header -->
+    <div class="mb-sm shrink-0">
+      <div class="flex items-center gap-sm mb-xs">
+        <span class="material-symbols-outlined text-primary text-2xl" style="font-variation-settings:'FILL' 1;" aria-hidden="true">robot_2</span>
+        <h2 class="font-headline-md text-headline-md text-primary">Preferences</h2>
+      </div>
+      <p class="font-body-md text-on-surface-variant text-sm">Refine your taste</p>
+    </div>
+
+    <!-- Preference Form -->
+    <form class="flex flex-col gap-gutter pb-md" id="preferencesForm" novalidate>
+
+      <!-- ── 1. Location Dropdown ── -->
+      <div class="flex flex-col gap-xs">
+        <label class="font-label-sm text-label-sm text-on-surface flex items-center gap-xs" for="locationInput">
+          <span class="material-symbols-outlined text-sm text-on-surface-variant" aria-hidden="true">location_on</span>
+          Location
+          <span class="text-primary ml-0.5" aria-hidden="true">*</span>
+          <span class="sr-only">(required)</span>
+        </label>
+
+        <div class="relative" id="locationWrapper">
+          <!-- Search Input -->
+          <input
+            id="locationInput"
+            type="text"
+            autocomplete="off"
+            spellcheck="false"
+            placeholder="Search city or area..."
+            aria-label="Location search"
+            aria-haspopup="listbox"
+            aria-autocomplete="list"
+            class="w-full bg-surface-variant/30 border border-white/10 rounded-lg py-2 px-3 pr-10 text-on-surface placeholder:text-on-surface-variant/50 focus:outline-none focus:border-primary-container focus:ring-1 focus:ring-primary-container transition-all"
+          />
+          <!-- Dropdown Arrow -->
+          <span
+            class="material-symbols-outlined absolute right-3 top-2.5 text-on-surface-variant text-sm pointer-events-none select-none"
+            id="locationArrow"
+            aria-hidden="true"
+          >expand_more</span>
+
+          <!-- Dropdown List -->
+          <div
+            id="locationDropdown"
+            role="listbox"
+            aria-label="Location options"
+            class="hidden absolute z-50 w-full mt-1 glass-card rounded-lg overflow-hidden max-h-52 overflow-y-auto shadow-2xl border border-white/10"
+          >
+            <div class="px-4 py-2.5 text-on-surface-variant text-sm italic" id="locationDropdownHint">
+              Loading locations...
+            </div>
+          </div>
+
+          <!-- Hidden real value -->
+          <input type="hidden" id="locationValue" name="location" />
+        </div>
+      </div>
+
+      <!-- ── 2. Budget Cards ── -->
+      <div class="flex flex-col gap-xs">
+        <label class="font-label-sm text-label-sm text-on-surface flex items-center gap-xs">
+          <span class="material-symbols-outlined text-sm text-on-surface-variant" aria-hidden="true">payments</span>
+          Budget (for two)
+        </label>
+        <div class="grid grid-cols-3 gap-sm" role="radiogroup" aria-label="Budget selection">
+
+          <div class="glass-card p-2 rounded-lg text-center cursor-pointer hover:border-primary/50 transition-all budget-option" data-value="low" role="radio" aria-checked="false" tabindex="0">
+            <span class="material-symbols-outlined text-on-surface-variant text-sm block mb-1" aria-hidden="true">savings</span>
+            <span class="budget-label font-label-md text-label-md block text-on-surface">Low</span>
+            <span class="budget-sub text-xs text-on-surface-variant">≤₹500</span>
+          </div>
+
+          <div class="glass-card p-2 rounded-lg text-center cursor-pointer border-primary/50 bg-primary/10 shadow-[0_0_18px_rgba(255,83,90,0.2)] transition-all budget-option active" data-value="medium" role="radio" aria-checked="true" tabindex="0">
+            <span class="material-symbols-outlined text-primary text-sm block mb-1" aria-hidden="true">account_balance_wallet</span>
+            <span class="budget-label font-label-md text-label-md block text-primary">Medium</span>
+            <span class="budget-sub text-xs text-primary">≤₹1500</span>
+          </div>
+
+          <div class="glass-card p-2 rounded-lg text-center cursor-pointer hover:border-primary/50 transition-all budget-option" data-value="high" role="radio" aria-checked="false" tabindex="0">
+            <span class="material-symbols-outlined text-on-surface-variant text-sm block mb-1" aria-hidden="true">diamond</span>
+            <span class="budget-label font-label-md text-label-md block text-on-surface">High</span>
+            <span class="budget-sub text-xs text-on-surface-variant">₹1500+</span>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ── 3. Cuisine Pills ── -->
+      <div class="flex flex-col gap-xs">
+        <label class="font-label-sm text-label-sm text-on-surface flex items-center justify-between">
+          <span class="flex items-center gap-xs">
+            <span class="material-symbols-outlined text-sm text-on-surface-variant" aria-hidden="true">restaurant</span>
+            Cuisines
+          </span>
+          <span class="text-xs text-on-surface-variant font-normal" id="cuisineSelectionLabel">Optional</span>
+        </label>
+        <div
+          class="flex flex-wrap gap-2 max-h-32 overflow-y-auto pr-0.5"
+          id="cuisinePillsContainer"
+          role="group"
+          aria-label="Cuisine selection"
+        >
+          <!-- Skeleton while loading -->
+          <div class="flex items-center gap-2 text-on-surface-variant text-xs">
+            <div class="w-3 h-3 rounded-full skeleton-shimmer"></div>
+            Loading cuisines...
+          </div>
+        </div>
+      </div>
+
+      <!-- ── 4. Minimum Rating Slider ── -->
+      <div class="flex flex-col gap-xs">
+        <div class="flex justify-between items-center">
+          <label class="font-label-sm text-label-sm text-on-surface flex items-center gap-xs" for="ratingSlider">
+            <span class="material-symbols-outlined text-sm text-on-surface-variant" aria-hidden="true">star</span>
+            Minimum Rating
+          </label>
+          <span class="font-label-md text-label-md text-primary" id="ratingValue" aria-live="polite">4.0+</span>
+        </div>
+        <input
+          id="ratingSlider"
+          type="range"
+          min="0" max="5" step="0.1" value="4.0"
+          style="--range-progress: 80%;"
+          aria-label="Minimum rating"
+          class="mt-1"
+        />
+        <div class="flex justify-between text-xs text-on-surface-variant/60 mt-0.5" aria-hidden="true">
+          <span>0.0 ★</span>
+          <span>2.5 ★</span>
+          <span>5.0 ★</span>
+        </div>
+      </div>
+
+      <!-- ── 5. Additional Preferences ── -->
+      <div class="flex flex-col gap-xs">
+        <label class="font-label-sm text-label-sm text-on-surface flex items-center justify-between" for="additionalPrefs">
+          <span class="flex items-center gap-xs">
+            <span class="material-symbols-outlined text-sm text-on-surface-variant" aria-hidden="true">edit_note</span>
+            Vibe &amp; Notes
+          </span>
+          <span class="text-xs text-on-surface-variant font-normal" id="charCounter" aria-live="polite">0/500</span>
+        </label>
+        <textarea
+          id="additionalPrefs"
+          placeholder="E.g., quiet for a date, outdoor seating, pet-friendly, live music..."
+          rows="3"
+          maxlength="500"
+          aria-label="Additional preferences"
+          class="w-full bg-surface-variant/30 border border-white/10 rounded-lg py-2 px-3 text-on-surface placeholder:text-on-surface-variant/50 focus:outline-none focus:border-primary-container focus:ring-1 focus:ring-primary-container transition-all resize-none text-sm leading-relaxed"
+        ></textarea>
+      </div>
+
+      <!-- ── Submit Button ── -->
+      <div class="pt-sm">
+        <button
+          id="submitBtn"
+          type="button"
+          class="w-full cinder-gradient text-white font-label-md text-label-md py-3 rounded-full pulse-glow transition-all duration-300 flex justify-center items-center gap-2"
+          aria-label="Get AI restaurant recommendations"
+        >
+          <span class="material-symbols-outlined text-sm" aria-hidden="true">auto_awesome</span>
+          Get AI Recommendations
+        </button>
+      </div>
+
+    </form>
+  </aside>
+
+  <!-- ══════════════════════════════════════════════════
+       RIGHT COLUMN — Results
+       ══════════════════════════════════════════════════ -->
+  <section
+    id="resultsSection"
+    class="col-span-1 lg:col-span-8 flex flex-col gap-lg relative"
+    aria-label="Restaurant Recommendations"
+    aria-live="polite"
+    aria-atomic="false"
+  >
+
+    <!-- Results Header -->
+    <div class="flex justify-between items-end border-b border-white/10 pb-sm shrink-0">
+      <div>
+        <h2 class="font-headline-lg text-headline-lg text-on-surface mb-xs">Curated for You</h2>
+        <p class="font-body-md text-on-surface-variant text-sm" id="resultsCount">
+          AI-selected matches based on your preferences.
+        </p>
+      </div>
+    </div>
+
+    <!-- Loading State Overlay -->
+    <div
+      id="loadingState"
+      class="hidden absolute inset-0 z-20 flex flex-col items-center justify-center bg-background/85 backdrop-blur-sm rounded-xl"
+      aria-busy="true"
+      aria-label="Loading recommendations"
+    >
+      <div class="w-16 h-16 rounded-full cinder-gradient animate-pulse flex items-center justify-center mb-md">
+        <span class="material-symbols-outlined text-white text-3xl" aria-hidden="true">psychology</span>
+      </div>
+      <h3 class="font-headline-md text-headline-md text-on-surface mb-2">Groq LLM is thinking...</h3>
+      <p class="font-body-md text-on-surface-variant text-center max-w-sm text-sm">
+        Analyzing your preferences to find the perfect culinary match.
+      </p>
+    </div>
+
+    <!-- AI Summary Banner -->
+    <div id="summaryBanner" class="hidden glass-card rounded-xl p-md border border-white/10" role="region" aria-label="AI Summary">
+      <div class="flex items-start gap-3">
+        <div class="w-8 h-8 rounded-full cinder-gradient flex items-center justify-center shrink-0 mt-0.5">
+          <span class="material-symbols-outlined text-white text-sm" style="font-variation-settings:'FILL' 1;" aria-hidden="true">auto_awesome</span>
+        </div>
+        <div>
+          <p class="font-label-md text-label-md text-primary mb-1">AI Summary</p>
+          <p class="font-body-md text-sm text-on-surface-variant leading-relaxed" id="summaryText"></p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Filter Relaxation Badge -->
+    <div id="relaxationBadge" class="hidden" role="status" aria-live="polite">
+      <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-secondary-container/20 border border-secondary-container/30">
+        <span class="material-symbols-outlined text-secondary text-sm" aria-hidden="true">info</span>
+        <span class="font-label-sm text-label-sm text-secondary">Filters were relaxed to find more results</span>
+      </div>
+    </div>
+
+    <!-- Empty / Initial State -->
+    <div id="emptyState" class="flex flex-col items-center justify-center py-xl text-center" role="region" aria-label="Empty state">
+      <div class="w-24 h-24 rounded-full glass-card flex items-center justify-center mb-md mx-auto" aria-hidden="true">
+        <span class="text-5xl select-none">🍽️</span>
+      </div>
+      <h3 class="font-headline-md text-headline-md text-on-surface mb-2">Ready to discover?</h3>
+      <p class="font-body-md text-on-surface-variant max-w-sm text-sm leading-relaxed">
+        Set your preferences on the left and click
+        <strong class="text-primary">Get AI Recommendations</strong>
+        to find your perfect dining experience.
+      </p>
+    </div>
+
+    <!-- Results Grid (populated by JS) -->
+    <div
+      class="grid grid-cols-1 md:grid-cols-2 gap-gutter"
+      id="resultsGrid"
+      role="list"
+      aria-label="Restaurant recommendations"
+    ></div>
+
+  </section>
+</main>
+
+<!-- ════════════════════════════════════════════════════════════════
+     FOOTER
+     ════════════════════════════════════════════════════════════════ -->
+<footer class="bg-surface-container-lowest border-t border-white/10 w-full mt-xl" role="contentinfo">
+  <div class="max-w-7xl mx-auto px-container-margin py-lg flex flex-col md:flex-row justify-between items-center gap-md">
+
+    <!-- Brand -->
+    <div class="flex items-center gap-2">
+      <svg width="20" height="20" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <defs>
+          <linearGradient id="footerLogoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%"   style="stop-color:#e23744;stop-opacity:1"/>
+            <stop offset="100%" style="stop-color:#f97316;stop-opacity:1"/>
+          </linearGradient>
+        </defs>
+        <path d="M50 10 C30 10 20 25 20 45 C20 65 50 90 50 90 C50 90 80 65 80 45 C80 25 70 10 50 10Z"
+              fill="none" stroke="url(#footerLogoGrad)" stroke-width="4"/>
+      </svg>
+      <span class="font-headline-md text-headline-md cinder-text-gradient font-bold">Cinder AI</span>
+    </div>
+
+    <!-- Links -->
+    <nav class="flex flex-wrap justify-center gap-gutter" aria-label="Footer navigation">
+      <a href="#"    class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-colors">Privacy Policy</a>
+      <a href="#"    class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-colors">Terms of Service</a>
+      <a href="/docs" class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-colors" target="_blank" rel="noopener">API Docs</a>
+    </nav>
+
+    <!-- Attribution -->
+    <p class="font-body-md text-sm text-on-surface-variant">
+      Powered by <span class="text-primary font-semibold">Groq LLM</span> · © 2025 Cinder AI
+    </p>
+  </div>
+</footer>
+
+<!-- ════════════════════════════════════════════════════════════════
+     TOAST CONTAINER
+     ════════════════════════════════════════════════════════════════ -->
+<div id="toastContainer" class="fixed bottom-6 right-6 z-[100] flex flex-col gap-2" aria-live="assertive" aria-atomic="false"></div>
+
+<!-- ════════════════════════════════════════════════════════════════
+     APP SCRIPT
+     ════════════════════════════════════════════════════════════════ -->
+<script src="app.js"></script>
+
+</body>
+</html>
