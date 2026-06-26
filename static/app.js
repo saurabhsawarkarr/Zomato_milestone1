@@ -9,6 +9,11 @@
  */
 
 /* ═══════════════════════════════════════════════════════════
+   API CONFIGURATION
+   ═══════════════════════════════════════════════════════════ */
+const API_BASE_URL = 'https://your-backend-app.up.railway.app'; // Replace with your actual Railway Domain
+
+/* ═══════════════════════════════════════════════════════════
    STATE
    ═══════════════════════════════════════════════════════════ */
 const state = {
@@ -78,8 +83,8 @@ document.addEventListener('DOMContentLoaded', async () => {
 async function loadMetadata() {
   try {
     const [locResult, cuisResult] = await Promise.allSettled([
-      fetch('/metadata/locations'),
-      fetch('/metadata/cuisines'),
+      fetch(`${API_BASE_URL}/metadata/locations`),
+      fetch(`${API_BASE_URL}/metadata/cuisines`),
     ]);
 
     // Locations
@@ -364,7 +369,7 @@ async function handleSubmit() {
   showLoading();
 
   try {
-    const res  = await fetch('/recommend', {
+    const res  = await fetch(`${API_BASE_URL}/recommend`, {
       method:  'POST',
       headers: { 'Content-Type': 'application/json' },
       body:    JSON.stringify(payload),
