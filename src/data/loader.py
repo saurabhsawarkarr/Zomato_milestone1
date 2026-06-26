@@ -96,18 +96,31 @@ def _download_from_huggingface() -> pd.DataFrame:
     try:
         from datasets import load_dataset
 
-        logger.info("Downloading dataset from Hugging Face: %s", HF_DATASET_ID)
-        dataset = load_dataset(HF_DATASET_ID)
+        logger.info("Downloading dataset from Hugging Face (Streaming): %s", HF_DATASET_ID)
+        # Use streaming=True to prevent massive memory usage during Arrow file generation
+        dataset = load_dataset(HF_DATASET_ID, streaming=True)
 
-        # The dataset may have train/test splits or be a single split
-        if isinstance(dataset, dict):
-            # Use 'train' split if available, otherwise use the first split
+        if isinstance(dataset, dict) or hasattr(dataset, "keys"):
             split_name = "train" if "train" in dataset else list(dataset.keys())[0]
-            df = dataset[split_name].to_pandas()
-            logger.info("Using split '%s' with %d rows", split_name, len(df))
+            iterable_ds = dataset[split_name]
         else:
-            df = dataset.to_pandas()
-            logger.info("Loaded dataset with %d rows", len(df))
+            iterable_ds = dataset
+
+        logger.info("Iterating streaming dataset to build dataframe...")
+        rows = []
+        for i, row in enumerate(iterable_ds):
+            # Immediately drop heavy columns to keep memory footprint tiny
+            row.pop("reviews_list", None)
+            row.pop("menu_item", None)
+            row.pop("url", None)
+            row.pop("phone", None)
+            rows.append(row)
+            
+            if i > 0 and i % 10000 == 0:
+                logger.info("Processed %d rows...", i)
+
+        df = pd.DataFrame(rows)
+        logger.info("Loaded streaming dataset with %d rows", len(df))
 
         return df
 
