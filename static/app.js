@@ -11,7 +11,7 @@
 /* ═══════════════════════════════════════════════════════════
    API CONFIGURATION
    ═══════════════════════════════════════════════════════════ */
-const API_BASE_URL = 'https://your-backend-app.up.railway.app'; // Replace with your actual Railway Domain
+const API_BASE_URL = 'https://zomatomilestone1-production.up.railway.app';
 
 /* ═══════════════════════════════════════════════════════════
    STATE
