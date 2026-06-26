@@ -229,6 +229,14 @@ def preprocess(df: pd.DataFrame) -> pd.DataFrame:
 
     df = df.rename(columns=column_map)
 
+    # Free up memory immediately by dropping unused heavy columns (like reviews_list)
+    keep_cols = [
+        "name", "location", "cuisines", "cost_for_two",
+        "rating", "votes", "restaurant_type", "highlights",
+    ]
+    available_cols = [c for c in keep_cols if c in df.columns]
+    df = df[available_cols].copy()
+
     # --- Step 2: Ensure required columns exist ---
     if "name" not in df.columns:
         raise RuntimeError(
@@ -317,13 +325,7 @@ def preprocess(df: pd.DataFrame) -> pd.DataFrame:
     # --- Step 5: Sort by rating descending ---
     df = df.sort_values("rating", ascending=False).reset_index(drop=True)
 
-    # Keep only the columns we need
-    keep_cols = [
-        "name", "location", "cuisines", "cost_for_two",
-        "rating", "votes", "restaurant_type", "highlights",
-    ]
-    available_cols = [c for c in keep_cols if c in df.columns]
-    df = df[available_cols]
+    # Columns already filtered at the beginning to save memory
 
     logger.info(
         "Preprocessing complete: %d → %d rows (%d removed)",
